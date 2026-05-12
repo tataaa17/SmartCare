@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Dashboard Monitoring Alzheimer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <div>
+                    <h2>SmartCare</h2>
+                    <p>Alzheimer Monitor</p>
+                </div>
+            </div>
+            
+            <div class="menu-section">
+                <p class="section-label">UMUM</p>
+                <ul class="nav-links">
+                    <li>
+                        <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item"><i class="fa-solid fa-heart-pulse"></i> Kesehatan</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item"><i class="fa-solid fa-chart-line"></i> Statistika</a>
+                    </li>
+                    <li class="active">
+                        <a href="notifikasi.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifikasi</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <p class="section-label">PENGATURAN</p>
+                <ul class="nav-links secondary">
+                    <li><i class="fa-solid fa-gear"></i> Setelan</li>
+                    <li><i class="fa-solid fa-user-gear"></i> Profil Pasien</li>
+                    <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> Keluar</li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="content-wrapper">
+            
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <h1>Notifikasi Sistem</h1>
+                    <p>Pemberitahuan kondisi pasien dan jadwal</p>
+                </header>
+
+                <div class="notification-list">
+                    <!-- Notif Darurat / Peringatan -->
+                    <div class="notif-item alert">
+                        <div class="notif-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="notif-content">
+                            <h4>Peringatan: Detak Jantung Tinggi!</h4>
+                            <p>Detak jantung Bpk. Yulianto melebihi batas normal (115 BPM). Segera periksa kondisi pasien.</p>
+                            <span class="time">10 Menit yang lalu</span>
+                        </div>
+                    </div>
+
+                    <!-- Notif Info / Rutinitas -->
+                    <div class="notif-item info">
+                        <div class="notif-icon"><i class="fa-solid fa-pills"></i></div>
+                        <div class="notif-content">
+                            <h4>Waktu Minum Obat</h4>
+                            <p>Jadwal minum obat darah tinggi untuk Bpk. Yulianto sekarang.</p>
+                            <span class="time">1 Jam yang lalu</span>
+                        </div>
+                    </div>
+
+                    <!-- Notif Normal / Sukses -->
+                    <div class="notif-item success">
+                        <div class="notif-icon"><i class="fa-solid fa-check"></i></div>
+                        <div class="notif-content">
+                            <h4>Medical Check-Up Selesai</h4>
+                            <p>Pemeriksaan rutin harian telah selesai dicatat oleh suster.</p>
+                            <span class="time">Kemarin, 10:00</span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="right-sidebar">
+                <div class="calendar-card card">
+                    <div class="calendar-header">
+                        <h3 id="month-year">Mei 2026</h3>
+                    </div>
+                    <div class="calendar-days-label">
+                        <span>M</span><span>S</span><span>S</span><span>R</span><span>K</span><span>J</span><span>S</span>
+                    </div>
+                    <div id="calendar-grid" class="calendar-grid"></div>
+                </div>
+
+                <div class="routine-section">
+                    <h3>Rutinitas Hari Ini</h3>
+                    <div class="routine-item green">
+                        <span class="time">07:00</span>
+                        <p>Sarapan Pagi</p>
+                    </div>
+                    <div class="routine-item blue">
+                        <span class="time">08:00</span>
+                        <p>Minum Obat Darah</p>
+                    </div>
+                    <div class="routine-item dark-blue">
+                        <span class="time">10:00</span>
+                        <p>Medical Check-Up</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
