@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil Pasien - SmartCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <div>
+                    <h2>SmartCare</h2>
+                    <p>Alzheimer Monitor</p>
+                </div>
+            </div>
+            
+            <div class="menu-section">
+                <p class="section-label">UMUM</p>
+                <ul class="nav-links">
+                    <li onclick="location.href='index.html'">
+                        <i class="fa-solid fa-house"></i> Dashboard
+                    </li>
+                    <li onclick="location.href='#'">
+                        <i class="fa-solid fa-heart-pulse"></i> Kesehatan
+                    </li>
+                    <li onclick="location.href='#'">
+                        <i class="fa-solid fa-chart-line"></i> Statistika
+                    </li>
+                    <li onclick="location.href='notifikasi.html'">
+                        <i class="fa-solid fa-bell"></i> Notifikasi
+                    </li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <p class="section-label">PENGATURAN</p>
+                <ul class="nav-links secondary">
+                    <li onclick="location.href='#'">
+                        <i class="fa-solid fa-gear"></i> Setelan
+                    </li>
+                    <li class="active" onclick="location.href='profile.html'">
+                        <i class="fa-solid fa-user-gear"></i> Profil Pasien
+                    </li>
+                    <li class="logout" onclick="alert('Berhasil Keluar')">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="content-wrapper">
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <h1>Pengaturan Profil Pasien</h1>
+                    <p>Perbarui informasi dasar untuk monitoring yang akurat</p>
+                </header>
+
+                <section class="card profile-form-card">
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label>Nama Lengkap Pasien</label>
+                            <input type="text" id="edit-name" name="nama" placeholder="Masukkan nama pasien" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Jenis Kelamin</label>
+                                <select id="edit-gender" name="gender">
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Usia (Tahun)</label>
+                                <input type="number" id="edit-age" name="usia" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tinggi Badan (cm)</label>
+                                <input type="number" id="edit-height" name="tinggi">
+                            </div>
+                            <div class="form-group">
+                                <label>Berat Badan (kg)</label>
+                                <input type="number" id="edit-weight" name="berat">
+                            </div>
+                            <div class="form-group">
+                                <label>Golongan Darah</label>
+                                <input type="text" id="edit-blood" name="gol_darah" maxlength="5">
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-save">Simpan Perubahan</button>
+                            <button type="button" class="btn-cancel" onclick="location.href='index.html'">Batal</button>
+                        </div>
+                    </form>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <script src="profile.js"></script>
+</body>
+</html>

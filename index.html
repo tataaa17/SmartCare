@@ -22,17 +22,17 @@
             <div class="menu-section">
                 <p class="section-label">UMUM</p>
                 <ul class="nav-links">
-                    <li class="active">
-                        <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i> Dashboard</a>
+                    <li class="active" onclick="location.href='index.html'">
+                        <i class="fa-solid fa-house"></i> Dashboard
                     </li>
-                    <li>
-                        <a href="#" class="nav-item"><i class="fa-solid fa-heart-pulse"></i> Kesehatan</a>
+                    <li onclick="location.href='#'">
+                        <i class="fa-solid fa-heart-pulse"></i> Kesehatan
                     </li>
-                    <li>
-                        <a href="#" class="nav-item"><i class="fa-solid fa-chart-line"></i> Statistika</a>
+                    <li onclick="location.href='#'">
+                        <i class="fa-solid fa-chart-line"></i> Statistika
                     </li>
-                    <li>
-                        <a href="notifikasi.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifikasi</a>
+                    <li onclick="location.href='notifikasi.html'">
+                        <i class="fa-solid fa-bell"></i> Notifikasi
                     </li>
                 </ul>
             </div>
@@ -40,9 +40,15 @@
             <div class="menu-section">
                 <p class="section-label">PENGATURAN</p>
                 <ul class="nav-links secondary">
-                    <li><i class="fa-solid fa-gear"></i> Setelan</li>
-                    <li><i class="fa-solid fa-user-gear"></i> Profil Pasien</li>
-                    <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> Keluar</li>
+                    <li onclick="location.href='#'">
+                        <i class="fa-solid fa-gear"></i> Setelan
+                    </li>
+                    <li onclick="location.href='profile.html'">
+                        <i class="fa-solid fa-user-gear"></i> Profil Pasien
+                    </li>
+                    <li class="logout" onclick="alert('Berhasil Keluar')">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -52,7 +58,7 @@
             <main class="main-content">
                 <header class="dashboard-header">
                     <h1>Dashboard Monitoring</h1>
-                    <p id="current-time-display"></p>
+                    <p id="current-time-display">--:--:--</p>
                 </header>
 
                 <section class="patient-banner">
@@ -60,7 +66,8 @@
                         <h2>Yulianto</h2>
                         <div class="stats-row">
                             <span><i class="fa-solid fa-calendar-day"></i> 78 Tahun</span>
-                            <span><i class="fa-solid fa-mars"></i> Laki-laki</span> <span><i class="fa-solid fa-ruler-vertical"></i> 175 cm</span>
+                            <span><i class="fa-solid fa-mars"></i> Laki-laki</span>
+                            <span><i class="fa-solid fa-ruler-vertical"></i> 175 cm</span>
                             <span><i class="fa-solid fa-weight-hanging"></i> 78 kg</span>
                             <span><i class="fa-solid fa-droplet"></i> Gol. O</span>
                         </div>
@@ -92,12 +99,13 @@
             <aside class="right-sidebar">
                 <div class="calendar-card card">
                     <div class="calendar-header">
-                        <h3 id="month-year">Mei 2026</h3>
+                        <h3 id="month-year">-- 2026</h3>
                     </div>
                     <div class="calendar-days-label">
                         <span>M</span><span>S</span><span>S</span><span>R</span><span>K</span><span>J</span><span>S</span>
                     </div>
-                    <div id="calendar-grid" class="calendar-grid"></div>
+                    <div id="calendar-grid" class="calendar-grid">
+                        </div>
                 </div>
 
                 <div class="routine-section">
@@ -118,6 +126,7 @@
             </aside>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
