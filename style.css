@@ -122,6 +122,21 @@ body {
     flex-shrink: 0;
 }
 
+/* Styling untuk link di sidebar */
+.nav-item {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+/* Hapus gap bawaan dari li karena sudah dipindah ke a */
+.nav-links li {
+    gap: 0; 
+}
+
 .calendar-header h3 { color: var(--dark-blue); text-align: center; margin-bottom: 20px; }
 .calendar-days-label { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
