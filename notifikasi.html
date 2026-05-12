@@ -50,40 +50,64 @@
         <div class="content-wrapper">
             
             <main class="main-content">
-                <header class="dashboard-header">
-                    <h1>Notifikasi Sistem</h1>
-                    <p>Pemberitahuan kondisi pasien dan jadwal</p>
+                <header class="dashboard-header notif-header-container">
+                    <div class="header-text">
+                        <h1>Notifikasi Sistem</h1>
+                        <p>Pemberitahuan kondisi pasien dan jadwal</p>
+                    </div>
+                    <button class="btn-clear" onclick="clearAllNotifications()">
+                        <i class="fa-solid fa-trash-can"></i> Bersihkan Semua
+                    </button>
                 </header>
 
-                <div class="notification-list">
+                <!-- Filter Kategori -->
+                <div class="notif-filters">
+                    <button class="filter-btn active" onclick="filterNotif('all')">Semua</button>
+                    <button class="filter-btn" onclick="filterNotif('alert')">Peringatan Medis</button>
+                    <button class="filter-btn" onclick="filterNotif('info')">Rutinitas Harian</button>
+                </div>
+
+                <div class="notification-list" id="tempat-notifikasi">
                     <!-- Notif Darurat / Peringatan -->
-                    <div class="notif-item alert">
-                        <div class="notif-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div class="notif-item alert" data-type="alert">
+                        <div class="notif-icon"><i class="fa-solid fa-heart-crack"></i></div>
                         <div class="notif-content">
+                            <div class="notif-meta">
+                                <span class="badge badge-alert">Kritis</span>
+                                <span class="time">10 Menit yang lalu</span>
+                            </div>
                             <h4>Peringatan: Detak Jantung Tinggi!</h4>
                             <p>Detak jantung Bpk. Yulianto melebihi batas normal (115 BPM). Segera periksa kondisi pasien.</p>
-                            <span class="time">10 Menit yang lalu</span>
                         </div>
+                        <button class="close-btn" onclick="tutupNotif(this)" title="Tandai sudah dibaca"><i class="fa-solid fa-xmark"></i></button>
                     </div>
 
                     <!-- Notif Info / Rutinitas -->
-                    <div class="notif-item info">
+                    <div class="notif-item info" data-type="info">
                         <div class="notif-icon"><i class="fa-solid fa-pills"></i></div>
                         <div class="notif-content">
+                            <div class="notif-meta">
+                                <span class="badge badge-info">Jadwal</span>
+                                <span class="time">1 Jam yang lalu</span>
+                            </div>
                             <h4>Waktu Minum Obat</h4>
                             <p>Jadwal minum obat darah tinggi untuk Bpk. Yulianto sekarang.</p>
-                            <span class="time">1 Jam yang lalu</span>
                         </div>
+                        <button class="close-btn" onclick="tutupNotif(this)" title="Tandai sudah dibaca"><i class="fa-solid fa-xmark"></i></button>
                     </div>
 
                     <!-- Notif Normal / Sukses -->
-                    <div class="notif-item success">
-                        <div class="notif-icon"><i class="fa-solid fa-check"></i></div>
+                    <div class="notif-item success" data-type="info">
+                        <div class="notif-icon"><i class="fa-solid fa-check-double"></i></div>
                         <div class="notif-content">
+                            <div class="notif-meta">
+                                <span class="badge badge-success">Selesai</span>
+                                <span class="time">Kemarin, 10:00</span>
+                            </div>
                             <h4>Medical Check-Up Selesai</h4>
-                            <p>Pemeriksaan rutin harian telah selesai dicatat oleh suster.</p>
-                            <span class="time">Kemarin, 10:00</span>
+                            <p>Pemeriksaan rutin harian telah selesai dicatat oleh perawat jaga.</p>
                         </div>
+                        <button class="close-btn" onclick="tutupNotif(this)" title="Tandai sudah dibaca"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
             </main>
