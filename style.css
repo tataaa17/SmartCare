@@ -137,6 +137,60 @@ body {
     gap: 0; 
 }
 
+
+/* ================= TAMPILAN NOTIFIKASI (MODERN) ================= */
+.notif-header-container { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }
+.btn-clear { background: #FFF0F0; color: #FF6B6B; border: none; padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+.btn-clear:hover { background: #FF6B6B; color: white; }
+
+/* Filter Tabs */
+.notif-filters { display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 2px solid #F0F2F5; padding-bottom: 15px; }
+.filter-btn { padding: 8px 20px; border: 1px solid #ECEEF2; background: white; border-radius: 20px; cursor: pointer; color: var(--text-muted); font-weight: 600; transition: 0.3s; font-size: 0.85rem; }
+.filter-btn.active, .filter-btn:hover { background: var(--dark-blue); color: white; border-color: var(--dark-blue); }
+
+/* Card Notifikasi */
+.notification-list { display: flex; flex-direction: column; gap: 18px; }
+.notif-item { 
+    background: white; padding: 25px; border-radius: 16px; 
+    display: flex; gap: 20px; align-items: flex-start; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid #FAFBFF;
+    border-left: 6px solid transparent; position: relative;
+    transition: all 0.4s ease; animation: slideIn 0.5s ease forwards;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Warna Indikator */
+.notif-item.alert { border-left-color: #FF6B6B; }
+.notif-item.info { border-left-color: var(--light-blue); }
+.notif-item.success { border-left-color: var(--light-green); }
+
+/* Lingkaran Icon */
+.notif-icon { width: 55px; height: 55px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
+.alert .notif-icon { background: #FFF0F0; color: #FF6B6B; }
+.info .notif-icon { background: #F0F4FF; color: var(--dark-blue); }
+.success .notif-icon { background: #F9FCE5; color: #8C9933; }
+
+/* Meta & Badge */
+.notif-content { flex: 1; }
+.notif-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; width: 100%; }
+.badge { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge-alert { background: #FFF0F0; color: #FF6B6B; }
+.badge-info { background: #F0F4FF; color: var(--dark-blue); }
+.badge-success { background: #F9FCE5; color: #8C9933; }
+.notif-meta .time { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+
+/* Teks Utama */
+.notif-content h4 { color: var(--dark-blue); margin-bottom: 6px; font-size: 1.15rem; }
+.notif-content p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+
+/* Tombol Close */
+.close-btn { background: none; border: none; color: #C1C7D0; cursor: pointer; font-size: 1.2rem; transition: 0.3s; padding: 5px; }
+.close-btn:hover { color: #FF6B6B; transform: scale(1.2); }
+
+/* Class untuk JavaScript */
+.notif-item.hide { display: none !important; }
+.notif-item.fade-out { opacity: 0; transform: translateX(50px); }
+
 .calendar-header h3 { color: var(--dark-blue); text-align: center; margin-bottom: 20px; }
 .calendar-days-label { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
