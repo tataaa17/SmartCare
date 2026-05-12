@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login SmartCare - Alzheimer Monitor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-blue: #364C84;
+            --light-blue: #95B1EE;
+            --base-white: #FFFDF5;
+            --text-muted: #7A869A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Menggunakan warna background yang sama dengan dashboard */
+            background: var(--base-white);
+        }
+
+        .login-box {
+            width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            /* Shadow halus agar terlihat modern */
+            box-shadow: 0 10px 30px rgba(54, 76, 132, 0.08);
+        }
+
+        .login-box h1 {
+            text-align: center;
+            color: var(--dark-blue);
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .login-box p {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 15px;
+            left: 18px;
+            color: var(--light-blue);
+            font-size: 1.1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 15px 14px 50px;
+            border: 2px solid #f0f4f8;
+            border-radius: 12px;
+            background: #fafbfc;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--light-blue);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(149, 177, 238, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: var(--dark-blue);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #2b3d6a;
+            transform: translateY(-2px);
+        }
+
+        /* Penambahan styling teks registrasi */
+        .register-text {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .register-text a {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .register-text a:hover {
+            color: var(--light-blue);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+    <h1>SmartCare</h1>
+    <p>Login ke Dashboard Monitoring</p>
+
+    <form id="loginForm">
+        <div class="input-group">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="username" placeholder="Username" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+
+    <div class="register-text">
+        Belum punya akun? <a href="register.html">Daftar di sini</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Simulasi pengecekan data di localStorage
+        const savedUsername = localStorage.getItem("username");
+        const savedPassword = localStorage.getItem("password");
+
+        if (username === savedUsername && password === savedPassword) {
+            alert("Login berhasil!");
+            window.location.href = "index.html";
+        } else {
+            alert("Username atau password salah!");
+        }
+    });
+</script>
+
+</body>
+</html>

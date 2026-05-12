@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi SmartCare - Alzheimer Monitor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-blue: #364C84;
+            --light-blue: #95B1EE;
+            --base-white: #FFFDF5;
+            --text-main: #2D3E50;
+            --text-muted: #7A869A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--base-white);
+            padding: 20px;
+        }
+
+        .container {
+            width: 950px;
+            max-width: 100%;
+            height: 650px;
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 20px 40px rgba(54, 76, 132, 0.1);
+        }
+
+        /* Bagian Kiri (Branding) */
+        .left {
+            width: 40%;
+            background: var(--dark-blue);
+            color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .left i {
+            font-size: 80px;
+            color: var(--light-blue);
+            margin-bottom: 25px;
+        }
+
+        .left h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .left p {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Bagian Kanan (Form) */
+        .right {
+            width: 60%;
+            padding: 50px 60px;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .right h2 {
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 18px;
+            top: 15px;
+            color: var(--light-blue);
+            font-size: 1.1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 15px 14px 50px;
+            border: 2px solid #f0f4f8;
+            border-radius: 12px;
+            background: #fafbfc;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--light-blue);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(149, 177, 238, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: var(--dark-blue);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: #2b3d6a;
+            transform: translateY(-2px);
+        }
+
+        .bottom-text {
+            margin-top: 25px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .bottom-text a {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .bottom-text a:hover {
+            color: var(--light-blue);
+        }
+
+        /* Responsif untuk layar kecil */
+        @media(max-width: 900px){
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            .left, .right {
+                width: 100%;
+                padding: 40px;
+            }
+            .left i { font-size: 50px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="left">
+        <i class="fa-solid fa-brain"></i>
+        <h1>SmartCare</h1>
+        <p>
+            Bergabunglah untuk memantau kondisi kesehatan pasien Alzheimer secara real-time. 
+            Solusi cerdas berbasis IoT untuk keamanan dan kenyamanan keluarga Anda.
+        </p>
+    </div>
+
+    <div class="right">
+        <h2>Registrasi</h2>
+        <p class="subtitle">Daftarkan akun pengasuh/keluarga pasien</p>
+
+        <form id="registerForm">
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="fullname" placeholder="Nama Lengkap" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-user-tag"></i>
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-phone"></i>
+                <input type="text" id="phone" placeholder="Nomor Telepon" required>
+            </div>
+
+            <button type="submit" class="btn">Buat Akun</button>
+        </form>
+
+        <div class="bottom-text">
+            Sudah punya akun? <a href="login.html">Login sekarang</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const fullname = document.getElementById("fullname").value;
+        const email = document.getElementById("email").value;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const phone = document.getElementById("phone").value;
+
+        // Menyimpan data ke localStorage agar bisa digunakan saat Login
+        localStorage.setItem("fullname", fullname);
+        localStorage.setItem("email", email);
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password);
+        localStorage.setItem("phone", phone);
+
+        alert("Registrasi berhasil! Silakan login.");
+        window.location.href = "login.html";
+    });
+</script>
+
+</body>
+</html>
