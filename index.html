@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Dashboard Monitoring Alzheimer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <div>
+                    <h2>SmartCare</h2>
+                    <p>Alzheimer Monitor</p>
+                </div>
+            </div>
+            
+            <div class="menu-section">
+                <p class="section-label">UMUM</p>
+                <ul class="nav-links">
+                    <li class="active"><i class="fa-solid fa-house"></i> Dashboard</li>
+                    <li><i class="fa-solid fa-heart-pulse"></i> Kesehatan</li>
+                    <li><i class="fa-solid fa-chart-line"></i> Statistika</li>
+                    <li><i class="fa-solid fa-bell"></i> Notifikasi</li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <p class="section-label">PENGATURAN</p>
+                <ul class="nav-links secondary">
+                    <li><i class="fa-solid fa-gear"></i> Setelan</li>
+                    <li><i class="fa-solid fa-user-gear"></i> Profil Pasien</li>
+                    <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> Keluar</li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="content-wrapper">
+            
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <h1>Dashboard Monitoring</h1>
+                    <p id="current-time-display"></p>
+                </header>
+
+                <section class="patient-banner">
+                    <div class="profile-info">
+                        <h2>Yulianto</h2>
+                        <div class="stats-row">
+                            <span><i class="fa-solid fa-calendar-day"></i> 78 Tahun</span>
+                            <span><i class="fa-solid fa-ruler-vertical"></i> 175 cm</span>
+                            <span><i class="fa-solid fa-weight-hanging"></i> 78 kg</span>
+                            <span><i class="fa-solid fa-droplet"></i> Gol. O</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="status-grid">
+                    <div class="card status-card blue">
+                        <h3><i class="fa-solid fa-temperature-half"></i> Suhu Tubuh</h3>
+                        <div class="value"><span id="temp">--</span>°C</div>
+                    </div>
+                    <div class="card status-card light-blue">
+                        <h3><i class="fa-solid fa-lungs"></i> SpO2</h3>
+                        <div class="value"><span id="spo2">--</span>%</div>
+                    </div>
+                </section>
+
+                <section class="heart-rate-section">
+                    <div class="card heart-card">
+                        <h3><i class="fa-solid fa-heart-pulse"></i> Detak Jantung Real-time</h3>
+                        <div class="bpm-display">
+                            <span class="bpm-number" id="bpm">--</span>
+                            <span class="bpm-unit">BPM</span>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <aside class="right-sidebar">
+                <div class="calendar-card card">
+                    <div class="calendar-header">
+                        <h3 id="month-year">Mei 2026</h3>
+                    </div>
+                    <div class="calendar-days-label">
+                        <span>M</span><span>S</span><span>S</span><span>R</span><span>K</span><span>J</span><span>S</span>
+                    </div>
+                    <div id="calendar-grid" class="calendar-grid"></div>
+                </div>
+
+                <div class="routine-section">
+                    <h3>Rutinitas Hari Ini</h3>
+                    <div class="routine-item green">
+                        <span class="time">07:00</span>
+                        <p>Sarapan Pagi</p>
+                    </div>
+                    <div class="routine-item blue">
+                        <span class="time">08:00</span>
+                        <p>Minum Obat Darah</p>
+                    </div>
+                    <div class="routine-item dark-blue">
+                        <span class="time">10:00</span>
+                        <p>Medical Check-Up</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
