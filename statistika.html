@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Statistika</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --sidebar-bg: #2d3561;
+            --sidebar-active: #7c6be0;
+            --sidebar-text: #a8b4d8;
+            --bg-main: #f5f0e8;
+            --card-bg: #ffffff;
+            --text-dark: #1a1f3a;
+            --text-mid: #5a6380;
+            --text-light: #8892aa;
+            --blue: #6b8cda;
+            --light-blue: #a0b9f0;
+            --green: #7bc47b;
+            --red: #e57373;
+            --orange: #f4a56a;
+            --purple: #7c6be0;
+            --border: #e8e2d6;
+            --shadow: 0 2px 16px rgba(44,53,97,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: 230px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px;
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 8px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo i {
+            font-size: 26px;
+            color: #a89be8;
+        }
+
+        .logo h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .logo p {
+            font-size: 11px;
+            color: var(--sidebar-text);
+        }
+
+        .menu-section {
+            margin-top: 24px;
+        }
+
+        .section-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            color: #5d6a9a;
+            padding: 0 8px;
+            margin-bottom: 8px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+        }
+
+        .nav-links li.active .nav-item {
+            background: var(--sidebar-active);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .nav-links.secondary li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: var(--sidebar-text);
+            font-size: 13.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-links.secondary li:hover {
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+        }
+
+        .nav-links.secondary li.logout {
+            margin-top: 8px;
+            color: #e57373;
+        }
+
+        .menu-section:last-child {
+            margin-top: auto;
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .page-wrapper {
+            margin-left: 230px;
+            flex: 1;
+            padding: 28px 28px 40px;
+            max-width: calc(100vw - 230px);
+        }
+
+        /* ── HEADER ── */
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .page-header p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* ── FILTER BAR ── */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar span {
+            font-size: 13px;
+            color: var(--text-mid);
+            font-weight: 500;
+        }
+
+        .filter-btn {
+            padding: 7px 18px;
+            border-radius: 20px;
+            border: 1.5px solid var(--border);
+            background: var(--card-bg);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-mid);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+
+        .filter-btn.active {
+            background: var(--sidebar-bg);
+            border-color: var(--sidebar-bg);
+            color: #fff;
+        }
+
+        /* ── SUMMARY CARDS ── */
+        .summary-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: transform 0.2s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .summary-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .summary-icon.spo2   { background: #e8f0ff; color: var(--blue); }
+        .summary-icon.hr     { background: #fdeaea; color: var(--red); }
+        .summary-icon.temp   { background: #fff3e8; color: var(--orange); }
+
+        .summary-info h4 {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-info .val {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .summary-info .sub {
+            font-size: 11.5px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* ── STATUS OVERVIEW ── */
+        .status-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .status-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .status-card h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-mid);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .status-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-label {
+            font-size: 12px;
+            width: 52px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .status-label.good  { color: #4caf50; }
+        .status-label.warn  { color: #ff9800; }
+        .status-label.bad   { color: #f44336; }
+
+        .bar-track {
+            flex: 1;
+            height: 8px;
+            background: #f0eeee;
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 99px;
+            transition: width 1s ease;
+        }
+
+        .bar-fill.good  { background: #4caf50; }
+        .bar-fill.warn  { background: #ff9800; }
+        .bar-fill.bad   { background: #f44336; }
+
+        .bar-count {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-mid);
+            width: 28px;
+            text-align: right;
+        }
+
+        /* ── CHARTS ── */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px 22px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .chart-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-header h3 i {
+            font-size: 15px;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 14px;
+        }
+
+        .legend-dot {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            color: var(--text-light);
+        }
+
+        .legend-dot span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .chart-wrap {
+            position: relative;
+            height: 180px;
+        }
+
+        .chart-wrap.tall {
+            height: 220px;
+        }
+
+        /* ── EVENT LOG ── */
+        .event-log {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px 22px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .event-log h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .event-table th {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
+            padding: 0 12px 10px;
+            border-bottom: 1.5px solid var(--border);
+        }
+
+        .event-table td {
+            font-size: 13px;
+            color: var(--text-mid);
+            padding: 11px 12px;
+            border-bottom: 1px solid #f5f0e8;
+        }
+
+        .event-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .event-table tr:hover td {
+            background: #faf8f4;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 11.5px;
+            font-weight: 600;
+        }
+
+        .badge.normal { background: #e8f5e9; color: #388e3c; }
+        .badge.warning { background: #fff8e1; color: #f57c00; }
+        .badge.danger  { background: #ffebee; color: #c62828; }
+
+        .metric-tag {
+            background: #f0f4ff;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 9px;
+            border-radius: 6px;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .summary-row, .status-overview, .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-card.full-width { grid-column: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-brain"></i>
+        <div>
+            <h2>SmartCare</h2>
+            <p>Alzheimer Monitor</p>
+        </div>
+    </div>
+
+    <div class="menu-section">
+        <p class="section-label">UMUM</p>
+        <ul class="nav-links">
+            <li>
+                <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="#" class="nav-item"><i class="fa-solid fa-heart-pulse"></i> Kesehatan</a>
+            </li>
+            <li class="active">
+                <a href="statistika.html" class="nav-item"><i class="fa-solid fa-chart-line"></i> Statistika</a>
+            </li>
+            <li>
+                <a href="notifikasi.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifikasi</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="menu-section">
+        <p class="section-label">PENGATURAN</p>
+        <ul class="nav-links secondary">
+            <li><i class="fa-solid fa-gear"></i> Setelan</li>
+            <li><i class="fa-solid fa-user-gear"></i> Profil Pasien</li>
+            <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> Keluar</li>
+        </ul>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <h1><i class="fa-solid fa-chart-line" style="color:var(--purple);margin-right:8px;font-size:22px;"></i>Statistika Pasien</h1>
+        <p id="current-date">Yulianto · 78 Tahun · Data kesehatan real-time</p>
+    </div>
+
+    <!-- FILTER -->
+    <div class="filter-bar">
+        <span>Rentang Waktu:</span>
+        <button class="filter-btn" onclick="setFilter(this,'1h')">1 Jam</button>
+        <button class="filter-btn active" onclick="setFilter(this,'24h')">24 Jam</button>
+        <button class="filter-btn" onclick="setFilter(this,'7d')">7 Hari</button>
+        <button class="filter-btn" onclick="setFilter(this,'30d')">30 Hari</button>
+    </div>
+
+    <!-- SUMMARY CARDS -->
+    <div class="summary-row">
+        <div class="summary-card">
+            <div class="summary-icon spo2"><i class="fa-solid fa-lungs"></i></div>
+            <div class="summary-info">
+                <h4>SpO2 Rata-rata</h4>
+                <div class="val" id="avg-spo2">97.2%</div>
+                <div class="sub">Min: 91% · Maks: 99%</div>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon hr"><i class="fa-solid fa-heart-pulse"></i></div>
+            <div class="summary-info">
+                <h4>Heart Rate Rata-rata</h4>
+                <div class="val" id="avg-hr">74 BPM</div>
+                <div class="sub">Min: 58 · Maks: 110 BPM</div>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon temp"><i class="fa-solid fa-temperature-half"></i></div>
+            <div class="summary-info">
+                <h4>Suhu Rata-rata</h4>
+                <div class="val" id="avg-temp">36.6°C</div>
+                <div class="sub">Min: 35.8° · Maks: 38.2°C</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATUS KONDISI -->
+    <div class="status-overview">
+        <!-- SpO2 -->
+        <div class="status-card">
+            <h4><i class="fa-solid fa-lungs" style="color:var(--blue)"></i> Kondisi SpO2</h4>
+            <div class="status-bars">
+                <div class="status-row">
+                    <span class="status-label good">Normal</span>
+                    <div class="bar-track"><div class="bar-fill good" style="width:0%" data-val="75"></div></div>
+                    <span class="bar-count">18</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label warn">Waspada</span>
+                    <div class="bar-track"><div class="bar-fill warn" style="width:0%" data-val="17"></div></div>
+                    <span class="bar-count">4</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label bad">Kritis</span>
+                    <div class="bar-track"><div class="bar-fill bad" style="width:0%" data-val="8"></div></div>
+                    <span class="bar-count">2</span>
+                </div>
+            </div>
+        </div>
+        <!-- Heart Rate -->
+        <div class="status-card">
+            <h4><i class="fa-solid fa-heart-pulse" style="color:var(--red)"></i> Kondisi Heart Rate</h4>
+            <div class="status-bars">
+                <div class="status-row">
+                    <span class="status-label good">Normal</span>
+                    <div class="bar-track"><div class="bar-fill good" style="width:0%" data-val="68"></div></div>
+                    <span class="bar-count">16</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label warn">Waspada</span>
+                    <div class="bar-track"><div class="bar-fill warn" style="width:0%" data-val="21"></div></div>
+                    <span class="bar-count">5</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label bad">Kritis</span>
+                    <div class="bar-track"><div class="bar-fill bad" style="width:0%" data-val="11"></div></div>
+                    <span class="bar-count">3</span>
+                </div>
+            </div>
+        </div>
+        <!-- Suhu -->
+        <div class="status-card">
+            <h4><i class="fa-solid fa-temperature-half" style="color:var(--orange)"></i> Kondisi Suhu</h4>
+            <div class="status-bars">
+                <div class="status-row">
+                    <span class="status-label good">Normal</span>
+                    <div class="bar-track"><div class="bar-fill good" style="width:0%" data-val="80"></div></div>
+                    <span class="bar-count">20</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label warn">Waspada</span>
+                    <div class="bar-track"><div class="bar-fill warn" style="width:0%" data-val="15"></div></div>
+                    <span class="bar-count">3</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label bad">Kritis</span>
+                    <div class="bar-track"><div class="bar-fill bad" style="width:0%" data-val="5"></div></div>
+                    <span class="bar-count">1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-grid">
+        <!-- SPO2 Line Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fa-solid fa-lungs" style="color:var(--blue)"></i> Tren SpO2</h3>
+                <div class="chart-legend">
+                    <span class="legend-dot"><span style="background:var(--blue)"></span>SpO2 %</span>
+                    <span class="legend-dot"><span style="background:#ddd"></span>Batas Normal</span>
+                </div>
+            </div>
+            <div class="chart-wrap"><canvas id="chartSpo2"></canvas></div>
+        </div>
+
+        <!-- Heart Rate Line Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fa-solid fa-heart-pulse" style="color:var(--red)"></i> Tren Heart Rate</h3>
+                <div class="chart-legend">
+                    <span class="legend-dot"><span style="background:var(--red)"></span>BPM</span>
+                    <span class="legend-dot"><span style="background:#ddd"></span>Zona Normal</span>
+                </div>
+            </div>
+            <div class="chart-wrap"><canvas id="chartHR"></canvas></div>
+        </div>
+
+        <!-- Suhu Line Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fa-solid fa-temperature-half" style="color:var(--orange)"></i> Tren Suhu Tubuh</h3>
+                <div class="chart-legend">
+                    <span class="legend-dot"><span style="background:var(--orange)"></span>°C</span>
+                    <span class="legend-dot"><span style="background:#ddd"></span>Zona Normal</span>
+                </div>
+            </div>
+            <div class="chart-wrap"><canvas id="chartTemp"></canvas></div>
+        </div>
+
+        <!-- Donut Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fa-solid fa-circle-half-stroke" style="color:var(--purple)"></i> Ringkasan Kondisi Keseluruhan</h3>
+            </div>
+            <div class="chart-wrap" style="display:flex;align-items:center;gap:20px;">
+                <canvas id="chartDonut" style="max-height:160px;max-width:160px;"></canvas>
+                <div style="flex:1">
+                    <div style="margin-bottom:10px;">
+                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                            <span style="color:#4caf50;font-weight:600;">● Normal</span>
+                            <span style="font-weight:700;color:var(--text-dark);">72%</span>
+                        </div>
+                        <div class="bar-track"><div class="bar-fill good" style="width:72%"></div></div>
+                    </div>
+                    <div style="margin-bottom:10px;">
+                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                            <span style="color:#ff9800;font-weight:600;">● Waspada</span>
+                            <span style="font-weight:700;color:var(--text-dark);">20%</span>
+                        </div>
+                        <div class="bar-track"><div class="bar-fill warn" style="width:20%"></div></div>
+                    </div>
+                    <div>
+                        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                            <span style="color:#f44336;font-weight:600;">● Kritis</span>
+                            <span style="font-weight:700;color:var(--text-dark);">8%</span>
+                        </div>
+                        <div class="bar-track"><div class="bar-fill bad" style="width:8%"></div></div>
+                    </div>
+                    <p style="font-size:11px;color:var(--text-light);margin-top:14px;">Total pengukuran: <strong style="color:var(--text-dark)">72 kali</strong> dalam 24 jam terakhir</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EVENT LOG -->
+    <div class="event-log">
+        <h3><i class="fa-solid fa-clock-rotate-left" style="color:var(--purple)"></i> Riwayat Kejadian Abnormal</h3>
+        <table class="event-table">
+            <thead>
+                <tr>
+                    <th>Waktu</th>
+                    <th>Metrik</th>
+                    <th>Nilai</th>
+                    <th>Status</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody id="event-tbody"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+// ── TANGGAL ──
+const now = new Date();
+document.getElementById('current-date').textContent =
+    `Yulianto · 78 Tahun · ${now.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}`;
+
+// ── FILTER BUTTON ──
+function setFilter(btn, val) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // In real app, reload charts for the period
+}
+
+// ── ANIMATE BARS ──
+setTimeout(() => {
+    document.querySelectorAll('.bar-fill[data-val]').forEach(el => {
+        el.style.width = el.dataset.val + '%';
+    });
+}, 300);
+
+// ── GENERATE LABELS (24 jam) ──
+function makeLabels24() {
+    const labels = [];
+    for (let h = 0; h < 24; h++) {
+        labels.push(`${String(h).padStart(2,'0')}:00`);
+    }
+    return labels;
+}
+
+const labels = makeLabels24();
+
+// ── SPO2 DATA ──
+const spo2Data = [97,98,96,97,98,99,97,95,96,97,98,97,96,94,95,97,98,91,96,97,98,97,96,97];
+
+// ── HR DATA ──
+const hrData = [72,74,76,75,73,70,68,72,78,80,85,74,70,72,75,110,80,72,65,68,72,74,76,74];
+
+// ── TEMP DATA ──
+const tempData = [36.5,36.6,36.5,36.6,36.7,36.6,36.5,36.4,36.6,36.8,37.2,38.2,37.5,36.9,36.7,36.6,36.5,36.6,36.7,36.5,36.4,36.6,36.6,36.5];
+
+const chartDefaults = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: { display: false },
+        tooltip: {
+            backgroundColor: '#1a1f3a',
+            titleFont: { size: 11 },
+            bodyFont: { size: 12, weight: '700' },
+            padding: 10,
+            cornerRadius: 8,
+        }
+    },
+    scales: {
+        x: {
+            grid: { color: 'rgba(0,0,0,0.04)' },
+            ticks: { font: { size: 10 }, color: '#8892aa', maxTicksLimit: 8 }
+        },
+        y: {
+            grid: { color: 'rgba(0,0,0,0.04)' },
+            ticks: { font: { size: 10 }, color: '#8892aa' }
+        }
+    }
+};
+
+function makeGradient(ctx, color) {
+    const grad = ctx.createLinearGradient(0, 0, 0, 180);
+    grad.addColorStop(0, color.replace(')', ',0.25)').replace('rgb','rgba'));
+    grad.addColorStop(1, color.replace(')', ',0)').replace('rgb','rgba'));
+    return grad;
+}
+
+// ── SPO2 CHART ──
+const ctxSpo2 = document.getElementById('chartSpo2').getContext('2d');
+const gradSpo2 = ctxSpo2.createLinearGradient(0, 0, 0, 180);
+gradSpo2.addColorStop(0, 'rgba(107,140,218,0.3)');
+gradSpo2.addColorStop(1, 'rgba(107,140,218,0)');
+
+new Chart(ctxSpo2, {
+    type: 'line',
+    data: {
+        labels,
+        datasets: [
+            {
+                label: 'Normal Min',
+                data: Array(24).fill(95),
+                borderColor: 'rgba(200,200,200,0.6)',
+                borderDash: [5,4],
+                borderWidth: 1.5,
+                pointRadius: 0,
+                fill: false,
+                tension: 0,
+            },
+            {
+                label: 'SpO2 %',
+                data: spo2Data,
+                borderColor: '#6b8cda',
+                backgroundColor: gradSpo2,
+                borderWidth: 2.5,
+                pointRadius: 3,
+                pointBackgroundColor: spo2Data.map(v => v < 95 ? '#f44336' : '#6b8cda'),
+                pointBorderWidth: 0,
+                fill: true,
+                tension: 0.4,
+            }
+        ]
+    },
+    options: { ...chartDefaults, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, min: 85, max: 100 } } }
+});
+
+// ── HR CHART ──
+const ctxHR = document.getElementById('chartHR').getContext('2d');
+const gradHR = ctxHR.createLinearGradient(0, 0, 0, 180);
+gradHR.addColorStop(0, 'rgba(229,115,115,0.25)');
+gradHR.addColorStop(1, 'rgba(229,115,115,0)');
+
+new Chart(ctxHR, {
+    type: 'line',
+    data: {
+        labels,
+        datasets: [
+            {
+                label: 'BPM Maks Normal',
+                data: Array(24).fill(100),
+                borderColor: 'rgba(200,200,200,0.6)',
+                borderDash: [5,4],
+                borderWidth: 1.5,
+                pointRadius: 0,
+                fill: false,
+                tension: 0,
+            },
+            {
+                label: 'BPM Min Normal',
+                data: Array(24).fill(60),
+                borderColor: 'rgba(200,200,200,0.6)',
+                borderDash: [5,4],
+                borderWidth: 1.5,
+                pointRadius: 0,
+                fill: false,
+                tension: 0,
+            },
+            {
+                label: 'Heart Rate BPM',
+                data: hrData,
+                borderColor: '#e57373',
+                backgroundColor: gradHR,
+                borderWidth: 2.5,
+                pointRadius: 3,
+                pointBackgroundColor: hrData.map(v => (v > 100 || v < 60) ? '#f44336' : '#e57373'),
+                pointBorderWidth: 0,
+                fill: true,
+                tension: 0.4,
+            }
+        ]
+    },
+    options: { ...chartDefaults, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, min: 40, max: 130 } } }
+});
+
+// ── TEMP CHART ──
+const ctxTemp = document.getElementById('chartTemp').getContext('2d');
+const gradTemp = ctxTemp.createLinearGradient(0, 0, 0, 180);
+gradTemp.addColorStop(0, 'rgba(244,165,106,0.25)');
+gradTemp.addColorStop(1, 'rgba(244,165,106,0)');
+
+new Chart(ctxTemp, {
+    type: 'line',
+    data: {
+        labels,
+        datasets: [
+            {
+                label: 'Batas Demam',
+                data: Array(24).fill(37.5),
+                borderColor: 'rgba(200,200,200,0.6)',
+                borderDash: [5,4],
+                borderWidth: 1.5,
+                pointRadius: 0,
+                fill: false,
+                tension: 0,
+            },
+            {
+                label: 'Suhu Tubuh °C',
+                data: tempData,
+                borderColor: '#f4a56a',
+                backgroundColor: gradTemp,
+                borderWidth: 2.5,
+                pointRadius: 3,
+                pointBackgroundColor: tempData.map(v => v > 37.5 ? '#f44336' : (v < 36.0 ? '#ff9800' : '#f4a56a')),
+                pointBorderWidth: 0,
+                fill: true,
+                tension: 0.4,
+            }
+        ]
+    },
+    options: { ...chartDefaults, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, min: 35, max: 39.5 } } }
+});
+
+// ── DONUT CHART ──
+const ctxDonut = document.getElementById('chartDonut').getContext('2d');
+new Chart(ctxDonut, {
+    type: 'doughnut',
+    data: {
+        labels: ['Normal', 'Waspada', 'Kritis'],
+        datasets: [{
+            data: [52, 14, 6],
+            backgroundColor: ['#4caf50', '#ff9800', '#f44336'],
+            borderWidth: 0,
+            hoverOffset: 6,
+        }]
+    },
+    options: {
+        responsive: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#1a1f3a',
+                titleFont: { size: 11 },
+                bodyFont: { size: 12, weight: '700' },
+                padding: 10,
+                cornerRadius: 8,
+            }
+        },
+        cutout: '68%',
+    }
+});
+
+// ── EVENT LOG ──
+const events = [
+    { time: '15:00', metric: 'SpO2', value: '91%', status: 'danger', label: 'Kritis', note: 'SpO2 di bawah batas aman (< 92%)' },
+    { time: '15:00', metric: 'Heart Rate', value: '110 BPM', status: 'warning', label: 'Waspada', note: 'Denyut jantung meningkat tiba-tiba' },
+    { time: '11:00', metric: 'Suhu', value: '38.2°C', status: 'danger', label: 'Kritis', note: 'Suhu di atas 38°C, kemungkinan demam' },
+    { time: '10:00', metric: 'Suhu', value: '37.5°C', status: 'warning', label: 'Waspada', note: 'Suhu mendekati batas demam' },
+    { time: '09:00', metric: 'Heart Rate', value: '85 BPM', status: 'warning', label: 'Waspada', note: 'Denyut jantung sedikit tinggi' },
+    { time: '07:00', metric: 'SpO2', value: '94%', status: 'warning', label: 'Waspada', note: 'SpO2 agak rendah, pantau kondisi' },
+    { time: '03:00', metric: 'Heart Rate', value: '65 BPM', status: 'normal', label: 'Normal', note: 'Denyut normal saat tidur' },
+    { time: '00:00', metric: 'SpO2', value: '97%', status: 'normal', label: 'Normal', note: 'Kondisi stabil' },
+];
+
+const tbody = document.getElementById('event-tbody');
+events.forEach(e => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td><strong>${e.time}</strong></td>
+        <td><span class="metric-tag">${e.metric}</span></td>
+        <td><strong style="font-size:14px;">${e.value}</strong></td>
+        <td><span class="badge ${e.status}">${e.status === 'danger' ? '⚠ ' : e.status === 'warning' ? '⚡ ' : '✓ '}${e.label}</span></td>
+        <td>${e.note}</td>
+    `;
+    tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
